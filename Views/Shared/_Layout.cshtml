@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    
+
+   
+     @Styles.Render("~/Content/BootstrapCss")
+      @Styles.Render("~/Pickadate/css")
+    @Scripts.Render("~/bundles/jquery")
+ @Scripts.Render("~/bundles/BootstrapJS")
+      @Scripts.Render("~/bundles/pickadate")
+ @RenderSection("scripts", required: false)
+   
+</head>
+<body>
+<!-- Static navbar -->
+<div class="container">
+     
+    @RenderBody()   
+    <hr />
+    <footer>
+        <p>&copy; Ledger @System.DateTime.Now.ToString("yyyy")</p>
+    </footer> 
+</div>
+
+   
+</body>
+ 
+</html>

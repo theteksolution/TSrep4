@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<style type="text/css">
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+</style>
+<h4>Current User ID</h4>
+    @if (Session["UserID"] != null)
+    {
+        @Session["UserID"].ToString();
+    }
+    else
+    {
+        <b>NULL</b>   
+    }
+    
+
+<h4>Customers</h4>
+<table class="gridtable">
+<thead>
+<tr>
+<td>CustomerID</td>
+<td>FirstName</td>
+      <td>LastName</td>
+      <td>Phone</td>
+      <td>Street1</td>
+      <td>Street2</td>
+      <td>City</td>
+      <td>State</td>
+      <td>Zip</td>
+      <td>DateAdded</td>
+      <td>AddedBy</td>
+      <td>DateUpdated</td>
+      <td>UpdatedBy</td>
+      <td>Email</td>
+</tr>
+</thead> 
+@foreach (var c in ViewBag.Customers)
+{
+<tr>
+<td>@c.CustomerID</td>
+
+     <td>@c.FirstName</td>
+      <td>@c.LastName</td>
+      <td>@c.Phone</td>
+      <td>@c.Street1</td>
+      <td>@c.Street2</td>
+      <td>@c.City</td>
+      <td>@c.State</td>
+      <td>@c.Zip</td>
+      <td>@c.DateAdded</td>
+      <td>@c.AddedBy</td>
+      <td>@c.DateUpdated</td>
+      <td>@c.UpdatedBy</td>
+      <td>@c.Email</td>
+</tr>
+}
+</table>
+<br /><br />
+<h4>Customer Balances</h4>
+<table  class="gridtable">
+<thead>
+<tr>
+<td>CustomerBalanceID</td>
+      <td>CustomerID</td>
+      <td>UpdatedBy</td>
+      <td>DateUpdated</td>
+      <td>Balance</td>
+</tr>
+</thead>
+@foreach (var b in ViewBag.Balances)
+{
+    <tr>
+<td>@b.CustomerBalanceID</td>
+      <td>@b.CustomerID</td>
+      <td>@b.UpdatedBy</td>
+      <td>@b.DateUpdated</td>
+      <td>@b.Balance</td>
+      </tr>
+}
+</table>
+<br /><br />
+<h4>Transactions</h4>
+<table  class="gridtable">
+<thead>
+<tr>
+<td>TransactionID</td>
+      <td>CustomerID</td>
+      <td>TransactionDate</td>
+      <td>AddedBy</td>
+      <td>LocationID</td>
+      <td>Note</td>
+      <td>Amount</td>
+      </tr>
+</thead>
+@foreach (var t in ViewBag.Transactions)
+{
+    <tr>
+<td>@t.TransactionID</td>
+      <td>@t.CustomerID</td>
+      <td>@t.TransactionDate</td>
+      <td>@t.AddedBy</td>
+      <td>@t.LocationID</td>
+      <td>@t.Note</td>
+      <td>@t.Amount</td>
+      </tr>
+}
+</table>
+@using (Html.BeginForm("Index", "ViewData"))
+{
+    @Html.TextBox("Stuff",null, new { style="width:500px" });
+                          
+    <input type="submit" value="yerp" />
+}

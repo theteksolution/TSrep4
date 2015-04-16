@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EarthSkyTimeModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="EarthSkyTimeModelStoreContainer">
+    <EntitySet Name="Customer" EntityType="EarthSkyTimeModel.Store.Customer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CustomerBalance" EntityType="EarthSkyTimeModel.Store.CustomerBalance" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Location" EntityType="EarthSkyTimeModel.Store.Location" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Transactions" EntityType="EarthSkyTimeModel.Store.Transactions" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Street1" Type="varchar" MaxLength="50" />
+    <Property Name="Street2" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="State" Type="varchar" MaxLength="2" />
+    <Property Name="Zip" Type="varchar" MaxLength="50" />
+    <Property Name="DateAdded" Type="datetime" />
+    <Property Name="AddedBy" Type="varchar" MaxLength="50" />
+    <Property Name="DateUpdated" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CustomerBalance">
+    <Key>
+      <PropertyRef Name="CustomerBalanceID" />
+    </Key>
+    <Property Name="CustomerBalanceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="DateUpdated" Type="datetime" />
+    <Property Name="Balance" Type="money" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationID" />
+    </Key>
+    <Property Name="LocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="LocationName" Type="varchar" MaxLength="50" />
+    <Property Name="Street1" Type="varchar" MaxLength="50" />
+    <Property Name="Street2" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="State" Type="varchar" MaxLength="2" />
+    <Property Name="Zip" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Transactions">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="TransactionDate" Type="datetime" />
+    <Property Name="AddedBy" Type="varchar" MaxLength="50" />
+    <Property Name="LocationID" Type="int" />
+    <Property Name="Note" Type="varchar" MaxLength="2000" />
+    <Property Name="Amount" Type="money" />
+  </EntityType>
+</Schema>

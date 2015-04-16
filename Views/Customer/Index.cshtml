@@ -1,0 +1,86 @@
+﻿@model EarthSkyTime.ViewModels.CustomerVM
+@{
+    ViewBag.Title = "Index";
+    SelectList slCustomer = ViewBag.CustomerList;
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+       
+        $("#selectCustomer").change(function () {
+
+            $("#form1").submit();
+        });
+
+        $("#btnExport").click(function () {
+
+            var url = '@Url.Action("ExportCSV", "Customer")' + "?ID=" + $("#selectCustomer").val();
+            window.location.href = url;
+        });
+
+//        $("#btnDetail").click(function () {
+
+//            var url = '@Url.Action("AddCustomer", "Customer")' +"?ID=" + $("#selectCustomer").val();
+//            window.location.href = url;
+//        });
+
+    });
+</script>
+
+@RenderPage("~/Views/Shared/_Menu1.cshtml", "Customer Transactions")
+
+<div style="padding:10px">
+<h4>Customer</h4>
+<br />
+
+@using (Html.BeginForm("Index", "Customer", FormMethod.Post, new { name = "form1", id = "form1" }))
+{
+ 
+    @Html.DropDownList("selectCustomer", slCustomer, new { @class = "form-control" })
+    <br />
+
+    if (Model.CustomerID != 0)
+    {
+
+    <address>
+   <strong>@Model.FirstName&nbsp;@Model.LastName</strong><br />
+  @Model.Street1&nbsp;@Model.Street2<br />
+  @Model.City&nbsp;@Model.State&nbsp;@Model.Zip<br />
+  @Model.Phone<br />
+  @Model.Email    <br />
+  <strong>@String.Format("Current Balance: {0:C}", Model.Amount)</strong>
+</address>
+
+
+  <br />
+ @*<a href="#" class="btn btn-primary" id="btnDetail">Update Customer Information</a>*@
+      
+    <input type="button"  class="btn btn-primary" value="Export Transactions" id="btnExport" /><br />
+    <h4>Transactions</h4>
+
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody>
+      @{
+          if (Model.CustomerTransactions != null)
+          {
+        foreach (var o in Model.CustomerTransactions)
+        {
+         <tr>
+             <td>@o.TransactionDate</td>
+             <td>@String.Format("{0:C}", o.Amount)</td>
+             <td>@o.Location</td>
+         </tr>  
+        }  
+        } 
+    }
+    </tbody>
+  </table>
+      }
+}
+</div>

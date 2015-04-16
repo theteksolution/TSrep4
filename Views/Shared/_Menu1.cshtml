@@ -1,0 +1,96 @@
+﻿ <nav class="navbar navbar-default" role="navigation">
+ 
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Ledger</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+           
+        @{
+            
+            if (Session["UserID"] != null)
+            {
+            
+            
+            if (PageData[0] == "Home")
+            {
+                <li class="active"><a href="#">Home</a></li>
+            }
+            else
+            {
+                <li><a href="~/Home/Index">Home</a></li>
+            }
+
+      
+               
+
+
+
+                if (PageData[0] == "Customer Transactions")
+                {
+                <li class="active"><a href="#">Customer Transactions</a></li>
+                }
+                else
+                {
+                <li><a href="~/Customer/Index">Customer Transactions</a></li>
+                }
+
+
+                if (PageData[0] == "All Transactions")
+                {
+                <li class="active"><a href="#">All Transactions</a></li>
+                }
+                else
+                {
+                <li><a href="~/Transactions/Index">All Transactions</a></li>
+                }
+
+                 if (PageData[0] == "Customer Information")
+                {
+                    <li class="active"><a href="#">Customer Information</a></li>
+                }
+                 else
+                 {
+                    <li><a href="~/Customer/AddCustomer">Customer Information</a></li>
+                 }
+
+
+
+                 if (PageData[0] == "Locations")
+                 {
+                <li class="active"><a href="#">Locations</a></li>
+                 }
+                 else
+                 {
+                <li><a href="~/Locations/Index">Locations</a></li>
+                 }
+
+            }
+            }
+       
+        
+      </ul>
+  
+        @{
+            if (Session["UserID"] != null)
+            {
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown" id="menuLogin">
+                        <a href="~/Authenticate/Logout">Logout</a>
+                    </li>
+                </ul>   
+            }   
+        }
+ 
+    </div><!-- /.navbar-collapse -->
+</nav>
+   

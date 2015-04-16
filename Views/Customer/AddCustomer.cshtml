@@ -1,0 +1,135 @@
+﻿@model EarthSkyTime.ViewModels.CustomerVM
+@{
+    ViewBag.Title = "Update Customer";
+    SelectList slCustomer = ViewBag.CustomerList;
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+
+        // Update the csutomer
+        $("#btnSubmit").click(function () {
+
+            if ($("#firstName").val() == "" || $("#lastName").val() == "") {
+                $("#addError").show();
+            }
+            else {
+
+                var promptText = "Update this Customer?";
+                if ($("#selectLocation").val() == "0") {
+                    promptText = "Add this Customer?";
+                }
+
+                bootbox.confirm(promptText, function (result) {
+                    if (result == true) {
+                        $("#IsUpdate").val("Y");
+                        $("#form1").submit();
+                    }
+                });
+
+            }
+
+        });
+
+        $("#selectCustomer").change(function () {
+            $("#form1").submit();
+        });
+
+        $(".close").click(function () {
+            $("#addError").hide();
+        });
+
+
+        // Reset the form
+        $("#btnReset").click(function () {
+            $("#selectCustomer").val("0");
+            $("#form1").submit();
+        });
+
+        function CheckCustomerAdded() {
+
+            if ($("#CustomerAdded").val() == "True") {
+
+                $("#alertCustAdded").show();
+            }
+        }
+
+        function CheckIsEdit() {
+            if ($("#IsEdit").val() == "True") {
+
+                $("#titleText").text("Update Customer");
+                $("#btnSubmitText").text("Update Customer");
+            }
+        }
+    
+        CheckCustomerAdded();
+        CheckIsEdit();
+    });
+
+</script>
+@RenderPage("~/Views/Shared/_Menu1.cshtml", "Customer Information")
+
+<div style="padding:10px">
+ <div id="alertCustAdded" class="alert alert-success" style="display:none">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Success!</strong> Customer updated successfully.
+    </div>
+<div id="addError" class="alert alert-danger alert-error" style="display:none">
+        <a href="#" class="close" >&times;</a>
+        <strong>Error!</strong> First Name and Last Name are needed.
+    </div>
+<h4><span id="titleText">Add Customer</span></h4>
+<br />
+@using (Html.BeginForm("AddCustomer", "Customer", FormMethod.Post, new { name = "form1", id = "form1" }))
+{
+      @Html.DropDownList("selectCustomer", slCustomer, new { @class = "form-control" })
+    <br />
+    
+   
+  @Html.Hidden("IsEdit", (object)ViewBag.IsEdit)
+  @Html.Hidden("CustomerAdded", (object)ViewBag.CustomerAdded)
+  @Html.Hidden("IsError", (object)ViewBag.IsError)
+   @Html.Hidden("IsUpdate")
+  
+ 
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" value="@Model.FirstName"  />
+  </div>
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input type="text" class="form-control" id="lastName"  name="lastName" placeholder="Last Name"  value="@Model.LastName" />
+  </div>
+  <div class="form-group">
+    <label for="street1">Street1</label>
+    <input type="text" class="form-control" id="street1" name="street1" placeholder="Street1"  value="@Model.Street1" />
+  </div>
+  <div class="form-group">
+    <label for="street2">Street2</label>
+    <input type="text" class="form-control" id="street2" name="street2" placeholder="Street2"  value="@Model.Street2" />
+  </div>
+  <div class="form-group">
+    <label for="city">City</label>
+    <input type="text" class="form-control" id="city" name="city" placeholder="City"  value="@Model.City" />
+  </div>
+  <div class="form-group">
+    <label for="state">State</label>
+    <input type="text" class="form-control" id="state" name="state" placeholder="State"  value="@Model.State" maxlength="2"/>
+  </div>
+  <div class="form-group">
+    <label for="zip">Zip</label>
+    <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip"  value="@Model.Zip" />
+  </div>
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone"  value="@Model.Phone" />
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" id="email" name="email" placeholder="Email"  value="@Model.Email" />
+  </div>
+
+  <a href="#" data-bb="confirm" class="btn btn-primary" id="btnSubmit"><span id="btnSubmitText">Add Customer</span></a> 
+  <a href="#" class="btn btn-primary" id="btnReset">Cancel</a>  
+
+}
+</div>

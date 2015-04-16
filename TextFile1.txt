@@ -1,0 +1,147 @@
+﻿<nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">EarthSkyTime</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#">Customer Transaction</a></li>
+              <li><a href="#">All Transactions</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Login <span class="sr-only">(current)</span></a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+
+
+	  --------------
+
+
+	  CREATE TABLE [dbo].[Transactions](
+	[TransactionID] [int] IDENTITY(1,1) NOT NULL,
+	[CustomerID] [int] NULL,
+	[TransactionDate] [datetime] NULL,
+	[AddedBy] [varchar](50) NULL,
+	[LocationID] [int] NULL,
+	[Note] [varchar](2000) NULL,
+	[Amount] [money] NULL,
+ CONSTRAINT [PK_Transactions] PRIMARY KEY CLUSTERED 
+(
+	[TransactionID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+  using (SqlConnection connection = new SqlConnection("Data Source=db572130233.db.1and1.com;Initial Catalog=db572130233;User ID=dbo572130233;Password=earthsql"))
+            {
+                SqlCommand command = new SqlCommand("CREATE TABLE [dbo].[Transactions]( "
++ " 	[TransactionID] [int] IDENTITY(1,1) NOT NULL, "
++ "	[CustomerID] [int] NULL, "
++ " 	[TransactionDate] [datetime] NULL, "
++ " 	[AddedBy] [varchar](50) NULL, "
++ " 	[LocationID] [int] NULL, "
++ "	[Note] [varchar](2000) NULL, "
++ "	[Amount] [money] NULL, "
++ "  CONSTRAINT [PK_Transactions] PRIMARY KEY CLUSTERED "
++ " ( "
++ " 	[TransactionID] ASC "
++ " )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY] "
++ ") ON [PRIMARY]",
+                    connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+
+
+
+            }
+
+
+
+
+
+
+
+			
+            /*   SqlCommand command = new SqlCommand("CREATE TABLE [dbo].[Customer]( "
++ "	[CustomerID] [int] IDENTITY(1,1) NOT NULL, "
++ "	[FirstName] [varchar](50) NULL, "
++ "	[LastName] [varchar](50) NULL, "
++ "	[Phone] [varchar](50) NULL, "
++ "	[Street1] [varchar](50) NULL, "
++ "	[Street2] [varchar](50) NULL, "
++ "	[City] [varchar](50) NULL, "
++ "	[State] [varchar](2) NULL, "
++ "	[Zip] [varchar](50) NULL, "
++ "	[DateAdded] [datetime] NULL, "
++ "	[AddedBy] [varchar](50) NULL, "
++ "	[DateUpdated] [datetime] NULL, "
++ "	[UpdatedBy] [varchar](50) NULL, "
++ "	[Email] [varchar](50) NULL, "
++ " CONSTRAINT [PK_Customer] PRIMARY KEY CLUSTERED "
++ " (  "
++ "	[CustomerID] ASC "
++ " )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY] "
++ " ) ON [PRIMARY] "
++ " ALTER TABLE [dbo].[Customer] ADD  CONSTRAINT [DF_Customer_DateAdded]  DEFAULT (getdate()) FOR [DateAdded] "*/
+
+
+
+            /*"CREATE TABLE [dbo].[CustomerBalance]( "
++ "	[CustomerBalanceID] [int] IDENTITY(1,1) NOT NULL, "
++ "	[CustomerID] [int] NULL, "
++ "	[UpdatedBy] [varchar](50) NULL, "
++ "	[DateUpdated] [datetime] NULL, "
++ "	[Balance] [money] NULL, "
++ " CONSTRAINT [PK_CustomerBalance] PRIMARY KEY CLUSTERED "
++ "( "
++ "	[CustomerBalanceID] ASC "
++ " )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY] "
++ " ) ON [PRIMARY] " */
+
+
+            /* "CREATE TABLE [dbo].[Location]( "
++ "	[LocationID] [int] IDENTITY(1,1) NOT NULL, "
++ "	[LocationName] [varchar](50) NULL, "
++ "	[Street1] [varchar](50) NULL, "
++ "	[Street2] [varchar](50) NULL, "
++ "	[City] [varchar](50) NULL, "
++ "	[State] [varchar](2) NULL, "
++ "	[Zip] [varchar](50) NULL, "
++ "  CONSTRAINT [PK_Location] PRIMARY KEY CLUSTERED "
++ " ( "
++ "	[LocationID] ASC "
++ " )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY] "
++ " ) ON [PRIMARY]" */
+
+
+
+--------
+
+
+db572130233
+db572130233.db.1and1.com
+dbo572130233
+earthsql
+
+    <add name="SETECConnectionString" connectionString="Data Source=haven.edc.org;Initial Catalog=SETEC;User ID=SETEC_User;Password=pf4n8*abbf2Zaf#y" providerName="System.Data.SqlClient"/>
+
+    <add name="SETECEntities" connectionString="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=haven.edc.org;initial catalog=SETEC;;User ID=SETEC_User;Password=pf4n8*abbf2Zaf#y;multipleactiveresultsets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient"/>
+
+
+
+
+    <add name="EarthSkyTimeEntities" connectionString="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local);initial catalog=EarthSkyTime;integrated security=True;multipleactiveresultsets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+
+
+    <add name="EarthSkyTimeEntities" connectionString="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=db572130233.db.1and1.com;initial catalog=db572130233;User ID=dbo572130233;Password=earthsql;multipleactiveresultsets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+
+    <add name="ESTConnectionString" connectionString="Data Source=db572130233.db.1and1.com;Initial Catalog=db572130233;User ID=dbo572130233;Password=earthsql" providerName="System.Data.SqlClient"/>

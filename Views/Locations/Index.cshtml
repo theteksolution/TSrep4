@@ -1,0 +1,125 @@
+﻿@model EarthSkyTime.ViewModels.LocationVM 
+@{
+    ViewBag.Title = "Index";
+    SelectList slLocations = ViewBag.LocationsList;
+}
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+
+        $("#selectLocation").change(function () {
+            $("#form1").submit();
+        });
+
+
+        $("#btnSubmit").click(function () {
+
+            if ($("#locationName").val() == "") {
+
+                $("#addError").show();
+            }
+            else {
+
+                var promptText = "Update this Location?";
+                if ($("#selectLocation").val() == "0") {
+                    promptText = "Add this Location?";
+                }
+
+                bootbox.confirm(promptText, function (result) {
+                    if (result == true) {
+                        $("#IsUpdate").val("Y");
+                        $("#form1").submit();
+                    }
+                });
+
+            }
+
+        });
+
+        $("#btnReset").click(function () {
+            $("#selectLocation").val("0");
+            $("#form1").submit();
+
+        });
+
+        $(".close").click(function () {
+            $("#addError").hide();
+        });
+
+        function CheckLocationAdded() {
+
+            if ($("#LocationAdded").val() == "True") {
+
+                $("#alertLocAdded").show();
+            }
+        }
+
+        function CheckIsEdit() {
+            if ($("#IsEdit").val() == "True") {
+
+                $("#titleText").text("Update Location");
+                $("#btnSubmitText").text("Update Location");
+            }
+        }
+
+        CheckLocationAdded();
+        CheckIsEdit();
+
+
+    });
+</script>
+
+@RenderPage("~/Views/Shared/_Menu1.cshtml", "Locations")
+
+<div style="padding:10px">
+<div id="alertLocAdded" class="alert alert-success" style="display:none">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Success!</strong> Location updated successfully.
+    </div>
+<div id="addError" class="alert alert-danger alert-error" style="display:none">
+        <a href="#" class="close" >&times;</a>
+        <strong>Error!</strong> Location Name is needed.
+    </div>
+<h4><span id="titleText">Add Location</span></h4>
+ 
+<br />
+@using (Html.BeginForm("Index", "Locations", FormMethod.Post, new { name = "form1", id = "form1" }))
+{
+  @Html.Hidden("IsEdit", (object)ViewBag.IsEdit)
+  @Html.Hidden("LocationAdded", (object)ViewBag.LocationAdded)
+  @Html.Hidden("IsError", (object)ViewBag.IsError)
+  @Html.Hidden("IsUpdate")
+
+    
+    @Html.DropDownList("selectLocation", slLocations, new { @class = "form-control" })
+    <br />
+    
+<div class="form-group">
+    <label for="locationName">Location Name</label>
+    <input type="text" class="form-control" id="locationName" name="locationName" placeholder="Location Name" value="@Model.LocationName"  />
+</div>
+<div class="form-group">
+    <label for="street1">Street1</label>
+    <input type="text" class="form-control" id="street1" name="street1" placeholder="Street1"  value="@Model.Street1" />
+  </div>
+  <div class="form-group">
+    <label for="street2">Street2</label>
+    <input type="text" class="form-control" id="street2" name="street2" placeholder="Street2"  value="@Model.Street2" />
+  </div>
+  <div class="form-group">
+    <label for="city">City</label>
+    <input type="text" class="form-control" id="city" name="city" placeholder="City"  value="@Model.City" />
+  </div>
+  <div class="form-group">
+    <label for="state">State</label>
+    <input type="text" class="form-control" id="state" name="state" placeholder="State"  value="@Model.State"  maxlength="2"/>
+  </div>
+  <div class="form-group">
+    <label for="zip">Zip</label>
+    <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip"  value="@Model.Zip" />
+  </div>
+    
+  <a href="#" data-bb="confirm" class="btn btn-primary" id="btnSubmit"><span id="btnSubmitText">Add Location</span></a> 
+  <a href="#" class="btn btn-primary" id="btnReset">Cancel</a>  
+}
+</div>

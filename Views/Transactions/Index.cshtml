@@ -1,0 +1,67 @@
+﻿@model IEnumerable<EarthSkyTime.ViewModels.TransactionVM>
+@{
+    ViewBag.Title = "Index";
+    SelectList slLocations = ViewBag.LocationsList;
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnExport").click(function () {
+
+            var url = '@Url.Action("ExportCSV", "Transactions")';
+            window.location.href = url;
+        });
+
+        $("#dateFrom").datepicker({ clearBtn: true, autoclose: true, todayHighlight: true });
+        $("#dateTo").datepicker({ clearBtn: true, autoclose: true, todayHighlight: true });
+    });
+</script>
+@RenderPage("~/Views/Shared/_Menu1.cshtml", "All Transactions")
+<div style="padding:10px">
+<h4>Transactions</h4>
+<br />
+@using (Html.BeginForm("Index","Transactions"))
+{
+ <div class="form-group">
+    <label for="dateFrom">Filter Date From [optional]</label>
+    <input type="text" class="form-control" id="dateFrom" name="dateFrom" placeholder="Date From" value="@ViewBag.FromDate" readonly  />
+  </div>
+  <div class="form-group">
+    <label for="dateTo">Filter Date To [optional]</label>
+    <input type="text" class="form-control" id="dateTo" name="dateTo" placeholder="Date To" value="@ViewBag.ToDate" readonly />
+  </div>
+   <div class="form-group">
+    <label for="location">Location [optional]</label>
+    @Html.DropDownList("selectLocation", slLocations, new { @class = "form-control" })   
+  </div>
+
+<input  class="btn btn-primary"  type="submit" value="Reload" />
+<input  class="btn btn-primary"  type="button" value="Export Transactions" id="btnExport"/><br /><br />
+}
+<table class="table table-bordered">
+<thead>
+      <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody>
+
+ @{
+        foreach(var o in Model)
+        {
+         <tr>
+             <td>@o.TransactionDate</td>
+             <td>@o.Name </td>
+             <td>@String.Format("{0:C}", o.Amount)</td>
+             <td>@o.Location</td>
+         </tr>  
+        }   
+    }
+    
+    </tbody>
+  </table>
+ 
+  </div>

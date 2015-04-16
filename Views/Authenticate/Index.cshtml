@@ -1,0 +1,50 @@
+﻿@model EarthSkyTime.ViewModels.LoginVM 
+@{
+    ViewBag.Title = "Index";
+}
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+
+        function CheckIsError() {
+            if ($("#IsError").val() == "True") {
+
+                $("#loginError").show();
+               
+            }
+        }
+
+        CheckIsError();
+    });
+
+</script>
+
+@RenderPage("~/Views/Shared/_Menu1.cshtml", "Login")
+<div style="padding:10px">
+<div id="loginError" class="alert alert-danger alert-error" style="display:none">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Error!</strong> Incorrect login credentials.
+    </div>
+<h4>Login</h4>
+<br />
+@using (Html.BeginForm("Index","Authenticate"))
+{
+  
+ @Html.Hidden("IsError", (object) ViewBag.IsError)   
+  <div class="form-group">
+    <label for="UserName">Username</label>
+    <input type="text" class="form-control" id="UserName" name="UserName" />
+  </div>
+    
+  <div class="form-group">
+    <label for="Password">Password</label>
+    <input type="password" class="form-control" id="Password" name="Password" />
+  </div>
+    
+    
+
+   <br />
+    <input class="btn btn-primary" type="submit" value="Login" />  
+}
+</div>
+

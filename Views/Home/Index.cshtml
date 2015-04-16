@@ -1,0 +1,110 @@
+﻿@model EarthSkyTime.ViewModels.CustomerVM
+@{
+    ViewBag.Title = "Home";
+    SelectList slCustomer = ViewBag.CustomerList;
+    SelectList slLocations = ViewBag.LocationsList;
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            bootbox.confirm("Update this amount?", function (result) {
+                $("#IsAmountUpdate").val("Y");
+                $("#form1").submit();
+            });
+
+        });
+
+
+        $("#selectCustomer").change(function () {
+
+            $("#form1").submit();
+        });
+
+        function CheckIfAmountAdded() {
+            if ($("#AmountAdded").val() == 'Y') {
+                $("#alertSuccess").show();
+            }
+        }
+
+        function CheckIfError() {
+            if ($("#Error").val() == "True") {
+                $("#alertError").show();
+            }
+        }
+
+
+       
+
+
+        CheckIfAmountAdded();
+        CheckIfError();
+    });
+
+</script>
+<script language="javascript" type="text/javascript">
+ function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+</script>
+@RenderPage("~/Views/Shared/_Menu1.cshtml", "Home")
+<div style="padding:10px">
+ <div id="alertSuccess" class="alert alert-success"  style="display:none">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Success!</strong> The amount has been added successfully.
+ </div>
+ <div id="alertError" class="alert alert-danger alert-error"  style="display:none">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Error!</strong> Enter a valid amount.
+ </div>
+<h4>Home</h4>
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { name = "form1", id = "form1" }))
+{
+<br />
+@Html.Hidden("IsAmountUpdate")   
+@Html.Hidden("AmountAdded", (object)ViewBag.AmountAdded)
+@Html.Hidden("Error", (object)ViewBag.Error)     
+@Html.DropDownList("selectCustomer", slCustomer, new { @class = "form-control" })
+<br />
+
+    if (Model != null)
+    {
+
+    <address>
+  <strong>@Model.FirstName&nbsp;@Model.LastName</strong><br />
+  @Model.Street1&nbsp;@Model.Street2<br />
+  @Model.City&nbsp;@Model.State&nbsp;@Model.Zip<br />
+  @Model.Phone<br />
+  @Model.Email    
+
+   <br />
+  <strong>@String.Format("Current Balance: {0:C}", Model.Amount)</strong>
+</address>
+<select class="form-control" id="purchaseType" name="purchaseType">
+    <option selected="selected">Purchase</option>
+    <option>Credit</option>
+</select>
+<br />    
+<div class="form-inline">
+ <div class="form-group">
+    <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+    <div class="input-group">
+      <div class="input-group-addon">$</div>
+      <input class="form-control" id="inputAmount" name="inputAmount" placeholder="Enter New Amount"  onkeypress="return isNumberKey(event)"  />
+     @* <div class="input-group-addon">.00</div>*@
+    </div>
+  </div>
+  </div> 
+<br />    
+  @Html.DropDownList("selectLocation", slLocations, new { @class = "form-control" })   
+  <br />
+<a href="#" data-bb="confirm" class="btn btn-primary"id="btnSubmit">Update Amount</a>
+     @*<a href="#" class="btn btn-primary" id="btnDetail">Customer Detail</a>*@
+    }
+
+}   
+</div>
