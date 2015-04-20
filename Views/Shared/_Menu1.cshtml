@@ -44,35 +44,46 @@
                 <li><a href="~/Customer/Index">Customer Transactions</a></li>
                 }
 
+                   if (PageData[0] == "All Balances")
+                 {
+                <li class="active"><a href="#">All Balances</a></li>
+                 }
+                   else
+                   {
+                <li><a href="~/CustomerBalance/Index">All Balances</a></li>
+                   }
 
-                if (PageData[0] == "All Transactions")
-                {
+
+                   if (PageData[0] == "All Transactions")
+                   {
                 <li class="active"><a href="#">All Transactions</a></li>
-                }
-                else
-                {
+                   }
+                   else
+                   {
                 <li><a href="~/Transactions/Index">All Transactions</a></li>
-                }
+                   }
 
-                 if (PageData[0] == "Customer Information")
-                {
+                   if (PageData[0] == "Customer Information")
+                   {
                     <li class="active"><a href="#">Customer Information</a></li>
-                }
-                 else
-                 {
+                   }
+                   else
+                   {
                     <li><a href="~/Customer/AddCustomer">Customer Information</a></li>
-                 }
+                   }
 
 
 
-                 if (PageData[0] == "Locations")
-                 {
+                   if (PageData[0] == "Locations")
+                   {
                 <li class="active"><a href="#">Locations</a></li>
-                 }
-                 else
-                 {
+                   }
+                   else
+                   {
                 <li><a href="~/Locations/Index">Locations</a></li>
-                 }
+                   }
+
+
 
             }
             }

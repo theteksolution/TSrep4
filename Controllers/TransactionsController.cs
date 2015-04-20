@@ -60,11 +60,12 @@ namespace EarthSkyTime.Controllers
 
       
         // Export as csv
-        public void ExportCSV()
+        [LogFilterAttribute]
+        public void ExportCSV(string dateFrom, string dateTo, string location)
         {
             TransactionsBL oTranBL = new TransactionsBL();
 
-            oTranBL.ExportDataTableToCsv("AllTransactions"); 
+            oTranBL.ExportDataTableToCsv("AllTransactions", dateFrom, dateTo, location); 
         }
 
     }

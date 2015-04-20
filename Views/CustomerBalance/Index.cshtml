@@ -1,0 +1,81 @@
+﻿@model IEnumerable< EarthSkyTime.ViewModels.CustomerBalanceVM >
+@{
+    ViewBag.Title = "Index";
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnExport").click(function () {
+            var url = '@Url.Action("ExportCSV", "CustomerBalance")';
+            window.location.href = url + "?filter=" + $("#filters").val();
+        });
+
+
+        function SetFilterValue() {
+            if ($("#filterValue").val() != "") {
+                $("#filters").val($("#filterValue").val());
+            }
+        }
+
+        SetFilterValue();
+    });
+</script>
+
+@RenderPage("~/Views/Shared/_Menu1.cshtml", "All Balances")
+
+<div style="padding:10px">
+<h4>Customer Balances</h4>
+<input type="hidden" id="filterValue" value="@ViewBag.FilterValue" /> 
+<br />
+
+@using (Html.BeginForm("Index", "CustomerBalance", FormMethod.Post, new { name = "form1", id = "form1" }))
+{
+
+   
+  <div class="form-group">
+     <label for="filters">Filters</label>
+     <select class="form-control" id="filters" name="filters" >
+        <option selected="selected">Date Descending</option>
+        <option>Date Ascending</option>
+        <option>Balance Ascending</option>
+        <option>Balance Descending</option>
+        <option>Name Ascending</option>
+        <option>Name Descending</option>
+    </select>
+  </div>
+    
+       <br />
+    
+   <input  class="btn btn-primary"  type="submit" value="Reload" />      
+    <input type="button"  class="btn btn-primary" value="Export Transactions" id="btnExport" /><br />
+   <br />
+
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Balance</th>
+        <th>Updated</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      @{
+         
+    foreach (var o in Model)
+    {
+         <tr>
+            <td>@o.Name</td>
+            <td>@String.Format("{0:C}", o.Amount)</td>
+            <td>@o.LastTransactionDate</td>
+            <td><a href="mailto:@o.Email">@o.Email</a></td>
+         </tr>  
+    }  
+       
+    }
+    </tbody>
+  </table>
+    
+}
+</div>
+

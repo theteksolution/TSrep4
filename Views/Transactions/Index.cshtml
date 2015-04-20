@@ -9,7 +9,7 @@
         $("#btnExport").click(function () {
 
             var url = '@Url.Action("ExportCSV", "Transactions")';
-            window.location.href = url;
+            window.location.href = url + "?dateFrom=" + $("#dateFrom").val() + "&dateTo=" + $("#dateTo").val() + "&location=" + $("#selectLocation").val();
         });
 
         $("#dateFrom").datepicker({ clearBtn: true, autoclose: true, todayHighlight: true });

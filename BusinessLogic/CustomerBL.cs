@@ -41,6 +41,7 @@ namespace EarthSkyTime.BusinessLogic
 
             // Get the customers
             var oCust = from c in estEnt.Customers
+                        orderby c.LastName 
                         select new { c.LastName, c.FirstName, c.CustomerID };
 
             foreach (var o in oCust)
@@ -125,7 +126,7 @@ namespace EarthSkyTime.BusinessLogic
             {
                 Customer oCust = new Customer()
                 {
-                    AddedBy = "LR",
+                    AddedBy = "Admin",
                     City = sCity,
                     FirstName = sFirstName,
                     LastName = sLastName,
@@ -144,7 +145,7 @@ namespace EarthSkyTime.BusinessLogic
                 iReturnCustID = oCust.CustomerID; 
 
                 // Setup their Balance information
-                CustomerBalance oBal = new CustomerBalance() { Balance = 0, CustomerID = oCust.CustomerID, DateUpdated = DateTime.Now, UpdatedBy = "LR" };
+                CustomerBalance oBal = new CustomerBalance() { Balance = 0, CustomerID = oCust.CustomerID, DateUpdated = DateTime.Now, UpdatedBy = "Admin" };
                 estEntity.AddToCustomerBalances(oBal);
                 estEntity.SaveChanges();
             }
@@ -235,7 +236,27 @@ namespace EarthSkyTime.BusinessLogic
 
                 foreach (var t1 in oTrans)
                 {
-                    lTransactions.Add(new TransactionVM { Name = t1.LastName + ", " + t1.FirstName, Amount = Convert.ToDecimal(t1.Amount), Location = t1.LocationName == null ? "None" : t1.LocationName + " - " + t1.City + ", " + t1.State, TransactionDate = Convert.ToDateTime(t1.TransactionDate).ToString() });
+                    string sLoc = t1.LocationName + " - " + t1.City + ", " + t1.State;
+                    if (t1.LocationName != null)
+                    {
+                        sLoc = t1.LocationName;
+
+                        if (t1.City != "")
+                        {
+                            sLoc += " - " + t1.City;
+                        }
+
+                        if (t1.State != "")
+                        {
+                            sLoc += ", " + t1.State;
+                        }
+                    }
+                    else
+                    {
+                        sLoc = "None";
+                    }
+
+                    lTransactions.Add(new TransactionVM { Name = t1.LastName + ", " + t1.FirstName, Amount = Convert.ToDecimal(t1.Amount), Location = sLoc , TransactionDate = Convert.ToDateTime(t1.TransactionDate).ToString() });
                 }
 
                 if (oCustInfo != null)
@@ -275,11 +296,32 @@ namespace EarthSkyTime.BusinessLogic
             // Populate table
             foreach (var t1 in oTrans)
             {
+
+                string sLoc = t1.LocationName + " - " + t1.City + ", " + t1.State;
+                if (t1.LocationName != null)
+                {
+                    sLoc = t1.LocationName;
+
+                    if (t1.City != "")
+                    {
+                        sLoc += " - " + t1.City;
+                    }
+
+                    if (t1.State != "")
+                    {
+                        sLoc += ", " + t1.State;
+                    }
+                }
+                else
+                {
+                    sLoc = "None";
+                }
+
                 DataRow row = dt1.NewRow();
                 row["Amount"] = Convert.ToDecimal(t1.Amount);
                 row["TransactionDate"] = Convert.ToDateTime(t1.TransactionDate).ToString();
                 row["CustomerID"] = t1.LastName + ", " + t1.FirstName;
-                row["LocationID"] = t1.LocationName == null ? "None" : t1.LocationName + " - " + t1.City + ", " + t1.State;
+                row["LocationID"] = sLoc;
               
                 dt1.Rows.Add(row);
             }

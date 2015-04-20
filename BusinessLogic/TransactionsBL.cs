@@ -67,7 +67,28 @@ namespace EarthSkyTime.BusinessLogic
 
             foreach (var t1 in oTrans)
             {
-                lTransactions.Add(new TransactionVM { Name = t1.LastName + ", " + t1.FirstName, Amount = Convert.ToDecimal(t1.Amount), Location = t1.LocationName == null ? "None" : t1.LocationName + " - " + t1.City + ", " + t1.State, TransactionDate = Convert.ToDateTime(t1.TransactionDate).ToString() });
+                string sLoc = t1.LocationName + " - " + t1.City + ", " + t1.State;
+                if (t1.LocationName != null)
+                {
+                    sLoc = t1.LocationName;
+
+                    if (t1.City != "")
+                    {
+                        sLoc += " - " + t1.City;
+                    }
+
+                    if (t1.State != "")
+                    {
+                        sLoc += ", " + t1.State;
+                    }
+                }
+                else
+                {
+                    sLoc = "None";
+                }
+
+
+                lTransactions.Add(new TransactionVM { Name = t1.LastName + ", " + t1.FirstName, Amount = Convert.ToDecimal(t1.Amount), Location = sLoc, TransactionDate = Convert.ToDateTime(t1.TransactionDate).ToString() });
             }
 
             return lTransactions;
@@ -103,7 +124,7 @@ namespace EarthSkyTime.BusinessLogic
 
 
         // Export the transactions as csv
-        public void ExportDataTableToCsv(string sType)
+        public void ExportDataTableToCsv(string sType, string dateFrom, string dateTo, string location)
         {
 
             EarthSkyTimeEntities estEnt = new EarthSkyTimeEntities();
@@ -121,15 +142,53 @@ namespace EarthSkyTime.BusinessLogic
                          join c in estEnt.Customers on t.CustomerID equals c.CustomerID
                          join l in estEnt.Locations on t.LocationID equals l.LocationID into joinedT
                          from l in joinedT.DefaultIfEmpty()
-                         select new { t.Amount, t.TransactionDate, c.FirstName, c.LastName, l.LocationName, l.City, l.State };
+                         select new { t.Amount, t.TransactionDate, c.FirstName, c.LastName, l.LocationName, l.City, l.State, LocationID = l.LocationID == null ? 0 : l.LocationID   };
+
+            if (dateFrom != "")
+            {
+                DateTime dtFrom = Convert.ToDateTime(dateFrom);
+                oTrans = oTrans.Where(m => m.TransactionDate >= dtFrom);
+            }
+
+            if (dateTo != "")
+            {
+                DateTime dtTo = Convert.ToDateTime(dateTo);
+                oTrans = oTrans.Where(m => m.TransactionDate <= dtTo);
+            }
+
+            if (location != "0")
+            {
+                int iLocation = Convert.ToInt32(location);
+                oTrans = oTrans.Where(m => m.LocationID == iLocation);
+            }
 
             foreach (var t1 in oTrans)
             {
+                string sLoc = t1.LocationName + " - " + t1.City + ", " + t1.State;
+                if (t1.LocationName != null)
+                {
+                    sLoc = t1.LocationName;
+
+                    if (t1.City != "")
+                    {
+                        sLoc += " - " + t1.City;
+                    }
+
+                    if (t1.State != "")
+                    {
+                        sLoc += ", " + t1.State;
+                    }
+                }
+                else
+                {
+                    sLoc = "None";
+                }
+
                 DataRow row = dt1.NewRow();
                 row["Amount"] = Convert.ToDecimal(t1.Amount);
                 row["TransactionDate"] = Convert.ToDateTime(t1.TransactionDate).ToString();
                 row["CustomerID"] = t1.LastName + ", " + t1.FirstName;
-                row["LocationID"] = t1.LocationName == null ? "None" : t1.LocationName + " - " + t1.City + ", " + t1.State;
+                row["LocationID"] = sLoc;
 
                 dt1.Rows.Add(row);
             }

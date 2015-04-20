@@ -98,10 +98,11 @@ namespace EarthSkyTime.Controllers
                 if (oBal != null)
                 {
                     oBal.Balance += dAmount;
+                    oBal.DateUpdated = DateTime.Now;
 
                     // Insert Transaction
 
-                    Transaction oTran = new Transaction() { AddedBy = "LR", CustomerID = iCustomerID, Amount = dAmount, LocationID = iLocationID, TransactionDate = DateTime.Now };
+                    Transaction oTran = new Transaction() { AddedBy = "Admin", CustomerID = iCustomerID, Amount = dAmount, LocationID = iLocationID, TransactionDate = DateTime.Now };
 
                     estEnt.AddToTransactions(oTran);
 

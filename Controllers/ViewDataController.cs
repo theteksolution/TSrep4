@@ -41,6 +41,9 @@ namespace EarthSkyTime.Controllers
         {
 
             string s = collection["Stuff"].ToString();
+            //string s = " INSERT [dbo].[Customer] ([FirstName], [LastName], [Phone], [Street1], [Street2], [City], [State], [Zip], [DateAdded], [AddedBy], [DateUpdated], [UpdatedBy], [Email]) VALUES (N'Jane', N'Davies', N'', N'po box 116', N'', N'manchester center', N'VT', N'05255', CAST(0x0000A47F00E37404 AS DateTime), NULL, NULL, NULL, N'jane@janedaviesstudios.com')  LR-YA";
+
+
             string c2 = "data source=(local);initial catalog=EarthSkyTime;integrated security=True";
             string c1 = "Data Source=db572130233.db.1and1.com;Initial Catalog=db572130233;User ID=dbo572130233;Password=earthsql";
 

@@ -45,8 +45,15 @@
    <strong>@Model.FirstName&nbsp;@Model.LastName</strong><br />
   @Model.Street1&nbsp;@Model.Street2<br />
   @Model.City&nbsp;@Model.State&nbsp;@Model.Zip<br />
-  @Model.Phone<br />
-  @Model.Email    <br />
+  @if (Model.Phone != "")
+  {
+      @:Phone:&nbsp;@Model.Phone<br />
+  }
+  
+  @if (Model.Email != "")
+  {
+     @:Email:&nbsp;<a href="mailto:@Model.Email">@Model.Email</a> <br />  
+  }
   <strong>@String.Format("Current Balance: {0:C}", Model.Amount)</strong>
 </address>
 
